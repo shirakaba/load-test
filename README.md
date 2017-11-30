@@ -18,9 +18,11 @@ A basic log-based experiment to investigate when each DOM element is loaded in t
 
 # Results
 
-I did a cursory test on (from oldest to newest): Chrome 62.0.3202.94, Safari 11.0.1, Firefox 49.0.2, and Opera 12.16. Provided the cache is indeed disabled, the events consistently ran in this order whether over localhost or over GitHub.io:
+## Materials
 
-## Nomenclature
+I did a cursory test on (from oldest to newest): Chrome 62.0.3202.94, Safari 11.0.1, Firefox 49.0.2, and Opera 12.16.
+
+## Nomenclature to follow
 
 * 'static' means that the element was specified purely by HTML declaration.
 
@@ -31,31 +33,39 @@ I did a cursory test on (from oldest to newest): Chrome 62.0.3202.94, Safari 11.
 
 ## Data
 
-1. The `<head>`'s first inline `<script>` element runs.
+Provided the cache was indeed disabled, the events consistently ran in this order whether over `localhost` or over `github.io`:
+
+1. The `<head>`'s first inline `<script>` element finishes running.
 
 2. The static `<link>` element loads.
 
 3. The static `<script>` element loads.
 
-4. The `<head>`'s second inline `<script>` element runs.
+4. The `<head>`'s second inline `<script>` element finishes running.
 
-5. The `<body>`'s first inline `<script>` runs.
+5. The `<body>`'s first inline `<script>` finishes running.
 
-6. The `<body>`'s second inline `<script>` (the 'listing task') runs.
+6. The `<body>`'s second inline `<script>` (the 'listing task') finishes running.
 
 7. The `<body>`'s static `<img>` element loads.
 
-8. The first dynamic `<link>` element (large filesize) requested by the `<head>`'s second inline `<script>` execution loads.
+8. The first dynamic `<link>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
 
-9. The second dynamic `<link>` element (small filesize) requested by the `<head>`'s second inline `<script>` execution loads.
+9. The second dynamic `<link>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
 
-9. The first dynamic `<script>` element (large filesize) requested by the `<head>`'s second inline `<script>` execution loads.
+9. The first dynamic `<script>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
 
-10. The second dynamic `<script>` element (small filesize) requested by the `<head>`'s second inline `<script>` execution loads.
+10. The second dynamic `<script>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
 
 11. `body.onload()` is triggered.
 
 
 # Interpretation
 
-The 
+* The browser traverses the HTML structure from **top to bottom** (`<head>` is only traversed first because it's traditionally placed at the top! I confirmed this by briefly swapping `<head>` with `<body>` and the loading order did indeed change correspondingly).
+
+* While traversing the `<head>`, it ran each element in turn:
+
+    * The inline `<script>` was run.
+
+    * The static `<link>` (large filesize; external site) was requested. The 

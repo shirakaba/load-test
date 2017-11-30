@@ -31,9 +31,11 @@
         </script>
 
         <!-- 2nd (localhost); 2nd (GitHub) -->
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" onload="reportCompletion('Static &lt;link&gt;: https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css', 'loaded', Date.now());" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" onload="reportCompletion('Static &lt;link&gt;(large; external): https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css', 'loaded', Date.now());" />
+        <link rel="stylesheet" type="text/css" href="index2.css" onload="reportCompletion('Static &lt;link&gt; (small; local): index2.css', 'loaded', Date.now());" />
         <!-- 3rd (localhost); 3rd (GitHub) -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" onload="reportCompletion('Static &lt;script&gt;: https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js', 'loaded', Date.now());" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" onload="reportCompletion('Static &lt;script&gt; (large; external): https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js', 'loaded', Date.now());" />
+        <script type="text/javascript" src="index2.js" onload="reportCompletion('Static &lt;script&gt; (small; local): index2.js', 'loaded', Date.now());" />
         <script type="text/javascript">
             [
                 // 8th (localhost); 8th (GitHub)
@@ -98,14 +100,14 @@
         <ol id="theList" style="background-color: lightgray;">
         </ol>
         <!-- 7th (localhost); 7th (GitHub) -->
-        <img src="giga_cirno.png" width="200" height="300" onload="reportCompletion('&lt;img&gt;: Giga Cirno', 'loaded', Date.now());"/>
+        <img src="giga_cirno.png" width="200" height="300" onload="reportCompletion('&lt;body&gt;\'s static &lt;img&gt; (large; local): Giga Cirno', 'loaded', Date.now());"/>
         <script type="text/javascript">
             // 5th (localhost); 5th (GitHub)
-            reportCompletion('&lt;body&gt;\'s inline &lt;script&gt;', 'run', Date.now())
+            reportCompletion('&lt;body&gt;\'s first inline &lt;script&gt;', 'run', Date.now())
         </script>
         <script type="text/javascript">
             // 6th (localhost); 6th (GitHub)
-            console.log("Running listing task now.");
+            reportCompletion('&lt;body&gt;\'s second inline &lt;script&gt;', 'run', Date.now())
             var theList = document.getElementById('theList');
             window.completions.forEach(function(completion){
                 var ul = document.createElement('ul');
