@@ -5,6 +5,18 @@
         <meta http-equiv="cache-control" content="no-cache" />
         <!--<link rel="stylesheet" type="text/css" href="linkTagCSS.css" />-->
         <script type="text/javascript">
+            window.completions = [];
+
+            function reportCompletion(item, task, date){
+                console.log(item + " " + task + " at: " + formatDate(date));
+
+                window.completions.push({
+                    item: item,
+                    task: task,
+                    date: date
+                })
+            }
+
             function formatDate(date){
                 var dateNowStrSliced = date.toString().slice(6);
                 return "..." + dateNowStrSliced[0] + "," + dateNowStrSliced.slice(1,4) + "," + dateNowStrSliced.slice(4,7) + " ms";
@@ -33,7 +45,7 @@
                         'load',
                         function(){
                             document.getElementsByTagName('head')[0].appendChild(link);
-                            console.log(sheetHref + " loaded at: " + formatDate(Date.now()));
+                            reportCompletion("&lt;link&gt;: " + sheetHref, "loaded", Date.now());
                         }
                     );
                 }
@@ -58,20 +70,33 @@
                         'load',
                         function(){
                             document.getElementsByTagName('head')[0].appendChild(script);
-                            console.log(scriptSrc + " loaded at: " + formatDate(Date.now()));
+                            reportCompletion("&lt;script&gt;: " + scriptSrc, "loaded", Date.now());
                         }
                     );
                 }
             );
+
+            console.log("&lt;head&gt;'s &lt;script&gt; finished running at: " + formatDate(Date.now()));
         </script>
 
         <title>Load test</title>
     </head>
 
-    <body onload="console.log('body.onload() triggered at: ' + formatDate(Date.now()));">
-        <img src="giga_cirno.png" onload="console.log('giga Cirno &lt;img&gt; triggered at: ' + formatDate(Date.now()));"/>
+    <body onload="reportCompletion('body.onload()', 'triggered', Date.now());">
+        <ol id="theList" style="background-color: lightgray;">
+        </ol>
+        <img src="giga_cirno.png" onload="reportCompletion('&lt;img&gt;: Giga Cirno', 'loaded', Date.now());"/>
         <script type="text/javascript">
-            console.log("body's inline &lt;script&gt; triggered at: " + formatDate(Date.now()));
+            reportCompletion('&lt;body&gt;\'s inline &lt;script&gt;', 'run', Date.now())
+        </script>
+        <script type="text/javascript">
+            console.log("Running listing task now.");
+            var theList = document.getElementById('theList');
+            window.completions.forEach(function(completion){
+                var ul = document.createElement('ul');
+                ul.textContent = completion.item + " " + completion.task + " at: " + formatDate(completion.date);
+                theList.appendChild(ul);
+            });
         </script>
     </body>
 
