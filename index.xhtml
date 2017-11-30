@@ -28,27 +28,27 @@
             };
 
             document.addEventListener("DOMContentLoaded", function(){
-                // 9th (localhost); 9th (GitHub)
+                // 9th
                 reportCompletion('DOMContentLoaded', 'fired', Date.now());
             });
 
-            // 1st (localhost); 1st (GitHub)
+            // 1st
             reportCompletion('&lt;head&gt;\'s first inline &lt;script&gt;', 'run', Date.now());
         </script>
 
-        <!-- 3rd (localhost); 3rd (GitHub) -->
+        <!-- 3rd -->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" onload="reportCompletion('Static &lt;link&gt;(large; external): https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css', 'loaded', Date.now());" />
-        <!-- 2nd (localhost); 2nd (GitHub) -->
+        <!-- 2nd -->
         <link rel="stylesheet" type="text/css" href="index2.css" onload="reportCompletion('Static &lt;link&gt; (small; local): index2.css', 'loaded', Date.now());" />
-        <!-- 4th (localhost); 4th (GitHub) -->
+        <!-- 4th -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" onload="reportCompletion('Static &lt;script&gt; (large; external): https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js', 'loaded', Date.now());" />
-        <!-- 5th (localhost); 5th (GitHub) -->
+        <!-- 5th -->
         <script type="text/javascript" src="index2.js" onload="reportCompletion('Static &lt;script&gt; (small; local): index2.js', 'loaded', Date.now());" />
         <script type="text/javascript">
             [
-                // 11th (localhost); 11th (GitHub)
+                // 11th
                 "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
-                // 12th (localhost); 12th (GitHub)
+                // 12th
                 "index.css"
             ]
             .forEach(
@@ -70,9 +70,9 @@
             );
 
             [
-                // 13th (localhost); 13th (GitHub)
+                // 13th
                 "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js",
-                // 14th (localhost); 14th (GitHub)
+                // 14th
                 "index.js"
             ]
             .forEach(
@@ -96,25 +96,25 @@
                 }
             );
 
-            // 6th (localhost); 6th (GitHub)
+            // 6th
             console.log("&lt;head&gt;'s second inline &lt;script&gt; finished running at: " + formatDate(Date.now()));
         </script>
 
         <title>Load test</title>
     </head>
 
-    <!--15th (localhost); 15th (GitHub) -->
+    <!--15th -->
     <body onload="reportCompletion('body.onload()', 'triggered', Date.now());">
         <ol id="theList" style="background-color: lightgray;">
         </ol>
-        <!-- 10th (localhost); 10th (GitHub) -->
+        <!-- 10th -->
         <img src="giga_cirno.png" width="200" height="300" onload="reportCompletion('&lt;body&gt;\'s static &lt;img&gt; (large; local): Giga Cirno', 'loaded', Date.now());"/>
         <script type="text/javascript">
-            // 7th (localhost); 7th (GitHub)
+            // 7th
             reportCompletion('&lt;body&gt;\'s first inline &lt;script&gt;', 'run', Date.now())
         </script>
         <script type="text/javascript">
-            // 8th (localhost); 8th (GitHub)
+            // 8th
             reportCompletion('&lt;body&gt;\'s second inline &lt;script&gt;', 'run', Date.now())
             var theList = document.getElementById('theList');
             window.completions.forEach(function(completion){
