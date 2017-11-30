@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
     <head>
         <meta http-equiv="cache-control" content="no-cache" />
-        <!--<link rel="stylesheet" type="text/css" href="linkTagCSS.css" />-->
         <script type="text/javascript">
             window.completions = [];
 
@@ -23,12 +22,14 @@
             }
 
             window.CACHE_BUST = "?v=" + Date.now();
-            // TODO: Do all this (ie. calling initApp()) only once body is ready. This currently may run before body.
             window.semaphore = {
                 bundleLoaded: false,
                 cssLoaded: false 
             };
-
+        </script>
+        <link rel="stylesheet" type="text/css" href="http://kendo.cdn.telerik.com/2017.3.1026/styles/kendo.common.min.css" onload="reportCompletion('Static &lt;link&gt;: http://kendo.cdn.telerik.com/2017.3.1026/styles/kendo.common.min.css', 'loaded', Date.now());" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" onload="reportCompletion('Static &lt;script&gt;: https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js', 'loaded', Date.now());" />
+        <script type="text/javascript">
             [
                 // 5th (localhost); 5th (GitHub)
                 "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
