@@ -26,6 +26,12 @@
                 bundleLoaded: false,
                 cssLoaded: false 
             };
+
+            document.addEventListener("DOMContentLoaded", function(){
+                // 9th (localhost); 9th (GitHub)
+                reportCompletion('DOMContentLoaded', 'fired', Date.now());
+            });
+
             // 1st (localhost); 1st (GitHub)
             reportCompletion('&lt;head&gt;\'s first inline &lt;script&gt;', 'run', Date.now());
         </script>
@@ -40,9 +46,9 @@
         <script type="text/javascript" src="index2.js" onload="reportCompletion('Static &lt;script&gt; (small; local): index2.js', 'loaded', Date.now());" />
         <script type="text/javascript">
             [
-                // 10th (localhost); 10th (GitHub)
-                "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
                 // 11th (localhost); 11th (GitHub)
+                "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
+                // 12th (localhost); 12th (GitHub)
                 "index.css"
             ]
             .forEach(
@@ -64,9 +70,9 @@
             );
 
             [
-                // 12th (localhost); 12th (GitHub)
-                "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js",
                 // 13th (localhost); 13th (GitHub)
+                "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js",
+                // 14th (localhost); 14th (GitHub)
                 "index.js"
             ]
             .forEach(
@@ -97,11 +103,11 @@
         <title>Load test</title>
     </head>
 
-    <!--14th (localhost); 14th (GitHub) -->
+    <!--15th (localhost); 15th (GitHub) -->
     <body onload="reportCompletion('body.onload()', 'triggered', Date.now());">
         <ol id="theList" style="background-color: lightgray;">
         </ol>
-        <!-- 9th (localhost); 9th (GitHub) -->
+        <!-- 10th (localhost); 10th (GitHub) -->
         <img src="giga_cirno.png" width="200" height="300" onload="reportCompletion('&lt;body&gt;\'s static &lt;img&gt; (large; local): Giga Cirno', 'loaded', Date.now());"/>
         <script type="text/javascript">
             // 7th (localhost); 7th (GitHub)

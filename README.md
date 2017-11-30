@@ -37,35 +37,65 @@ Provided the cache was indeed disabled, the events consistently ran in this orde
 
 1. The `<head>`'s first inline `<script>` element finishes running.
 
-2. The static `<link>` element loads.
+2. The SECOND static `<link>` element (small, local) loads.
 
-3. The static `<script>` element loads.
+3. The FIRST static `<link>` element (large, external) loads.
 
-4. The `<head>`'s second inline `<script>` element finishes running.
+4. The first static `<script>` (large, external) element loads.
 
-5. The `<body>`'s first inline `<script>` finishes running.
+5. The second static `<script>` (small, local) element loads.
 
-6. The `<body>`'s second inline `<script>` (the 'listing task') finishes running.
+6. The `<head>`'s second inline `<script>` element finishes running.
 
-7. The `<body>`'s static `<img>` element loads.
+7. The `<body>`'s first inline `<script>` finishes running.
 
-8. The first dynamic `<link>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
+8. The `<body>`'s second inline `<script>` (the 'listing task') finishes running.
 
-9. The second dynamic `<link>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
+9. `DOMContentLoaded` fires.
 
-9. The first dynamic `<script>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
+10. The `<body>`'s static `<img>` element loads.
 
-10. The second dynamic `<script>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
+11. The first dynamic `<link>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
 
-11. `body.onload()` is triggered.
+12. The second dynamic `<link>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
+
+13. The first dynamic `<script>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
+
+14. The second dynamic `<script>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
+
+15. `document.body.onload()` (same as `window.onload()`, I am told) is triggered.
 
 
 # Interpretation
 
 * The browser traverses the HTML structure from **top to bottom** (`<head>` is only traversed first because it's traditionally placed at the top! I confirmed this by briefly swapping `<head>` with `<body>` and the loading order did indeed change correspondingly).
 
-* While traversing the `<head>`, it ran each element in turn:
+* While traversing the `<head>`, it addressed each element in turn:
 
-    * The inline `<script>` was run.
+    * The first inline `<script>` (containing reporting functions) was run.
 
-    * The static `<link>` (large filesize; external site) was requested. The 
+    * The first static `<link>` (large filesize; external site) was requested, but responded AFTER the following-specified element:
+
+    * The second static `<link>` (small filesize; local) was requested, and responded shortly BEFORE the first static `<link>` responded.
+
+    * The first static `<script>` (large filesize; external site) was requested, and this time responded before the small static `<script>` that would follow it. The network inspector shows that it was requested at the same time the previous two requests were made (a batch of three). I've read that HTTP allows batches of two requests to be made to each domain in parallel, and indeed, this shares the same CDN as the first static `<link>`. However, it's not clear then why the following static `<script>` wasn't also batched (as it shared the same domain as the second static `<link>`); maybe `index.xhtml` consumed one of the two requests for that domain's HTTP batch?
+
+    * The second static `<script>` (small filesize; local) was requested in a new HTTP batch and so responded after the first static `<script>`.
+
+    * The second inline `<script>` (specifying dynamic requests for CSS and JS files) was run. These dynamic requests were not sent until all the elements in the DOM had been fully loaded (ie. the request was postponed until exactly the moment that the latest-to-finish-loading element in the `<body>` – the `<img>` element – had finished loading!)
+
+* While the aforementioned dynamic requests were queued, the browser started addressing each element inside the `<body>` in turn:
+
+    * The request for the `<img>` element was launched, but further events proceeded while it awaited the response:
+
+    * The first inline `<script>` (just containing a log message) was run.
+
+    * The second inline `<script>` (editing a `<ol>` element declared shortly before it) was run.
+
+    * `DOMContentLoaded` fires (as all DOM elements have been placed into the page, albeit awaiting the response for data in our `<img>` element).
+
+    * The request for the `<img>` element finally completed, permitting the dynamic requests to finally complete:
+
+    * The dynamic requests for both CSS and JS resources were all sent in one batch. Although the network inspector shows the small, local files (which were requested after the large, external files) responding before their counterparts, the log messages show their `onload` events firing in the same order as their requests were made in, giving the impression that they all responded synchronously. This is hard to explain – it makes it seem like `onload` messages are postponed until any prior in-flight requests respond, but that seems like it would be bad practice.
+
+* Finally, the `<body>` element's `onload` callback triggers.
