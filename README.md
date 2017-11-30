@@ -100,3 +100,16 @@ Provided the cache was indeed disabled, the events consistently ran in this orde
     * The dynamic requests for both CSS and JS resources were all batched together. Although the network inspector shows the small, local files (which were requested after the large, external files) responding before their counterparts, the log messages show their `onload` events firing in exactly the same order as their requests were made in, giving the impression that they all responded synchronously. This is hard to explain – it makes it seem like `onload` messages are postponed until any prior in-flight requests respond, but that seems like it would be bad practice.
 
 * Finally, the `<body>` element's `onload` callback triggers.
+
+# Discussion
+
+
+Here's what I want:
+
+* To cachebust a target `.js` file (specifically a webpack bundle containing all my source code). There are various ways to approach this, though I've done it by assembling a dynamic URL and setting it as the `src` for a virtual `<script>` element, using inlined JS.
+
+* To send the request for this file as soon as possible, as it is likely the largest resource to be fetched.
+
+* To call a function (eg. `initApp()`) from it at the earliest safe opportunity (`DOMContentLoaded`).
+
+When setting the `src` on a virtual `<script>` element, even if you do so within the `<head>`, its target `.js` file is not going to start its request until all static elements in the `<body>` (eg. `<img>`) have returned all their responses.
