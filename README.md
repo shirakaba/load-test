@@ -55,16 +55,17 @@ Provided the cache was indeed disabled, the events consistently ran in this orde
 
 10. The `<body>`'s static `<img>` element loads.
 
-11. The first dynamic `<link>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
+11. The first dynamic `<link>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.*
 
-12. The second dynamic `<link>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
+12. The second dynamic `<link>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.*
 
-13. The first dynamic `<script>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.
+13. The first dynamic `<script>` element (large filesize; external site) requested by the `<head>`'s second inline `<script>` execution loads.*
 
-14. The second dynamic `<script>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.
+14. The second dynamic `<script>` element (small filesize; local) requested by the `<head>`'s second inline `<script>` execution loads.*
 
 15. `document.body.onload()` (same as `window.onload()`, I am told) is triggered.
 
+** The order of these is unaffected by whether the elements are added to the DOM or just kept in memory. *
 
 # Interpretation
 
@@ -96,6 +97,6 @@ Provided the cache was indeed disabled, the events consistently ran in this orde
 
     * The request for the `<img>` element finally completed, permitting the dynamic requests to finally complete:
 
-    * The dynamic requests for both CSS and JS resources were all sent in one batch. Although the network inspector shows the small, local files (which were requested after the large, external files) responding before their counterparts, the log messages show their `onload` events firing in the same order as their requests were made in, giving the impression that they all responded synchronously. This is hard to explain – it makes it seem like `onload` messages are postponed until any prior in-flight requests respond, but that seems like it would be bad practice.
+    * The dynamic requests for both CSS and JS resources were all batched together. Although the network inspector shows the small, local files (which were requested after the large, external files) responding before their counterparts, the log messages show their `onload` events firing in exactly the same order as their requests were made in, giving the impression that they all responded synchronously. This is hard to explain – it makes it seem like `onload` messages are postponed until any prior in-flight requests respond, but that seems like it would be bad practice.
 
 * Finally, the `<body>` element's `onload` callback triggers.
