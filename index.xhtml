@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
     <head>
         <meta http-equiv="cache-control" content="no-cache" />
-        <!-- 1st (localhost); 1st (GitHub) -->
         <script type="text/javascript">
             window.completions = [];
 
@@ -27,15 +26,19 @@
                 bundleLoaded: false,
                 cssLoaded: false 
             };
-            reportCompletion('&lt;head&gt;\'s inline &lt;script&gt;', 'run', Date.now());
+            // 1st (localhost); 1st (GitHub)
+            reportCompletion('&lt;head&gt;\'s first inline &lt;script&gt;', 'run', Date.now());
         </script>
+
+        <!-- 2nd (localhost); 2nd (GitHub) -->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" onload="reportCompletion('Static &lt;link&gt;: https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css', 'loaded', Date.now());" />
+        <!-- 3rd (localhost); 3rd (GitHub) -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" onload="reportCompletion('Static &lt;script&gt;: https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js', 'loaded', Date.now());" />
         <script type="text/javascript">
             [
-                // 5th (localhost); 5th (GitHub)
+                // 8th (localhost); 8th (GitHub)
                 "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
-                // 6th (localhost); 6th (GitHub)
+                // 9th (localhost); 9th (GitHub)
                 "index.css"
             ]
             .forEach(
@@ -57,9 +60,9 @@
             );
 
             [
-                // 7th (localhost); 7th (GitHub)
+                // 10th (localhost); 10th (GitHub)
                 "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js",
-                // 8th (localhost); 8th (GitHub)
+                // 11th (localhost); 11th (GitHub)
                 "index.js"
             ]
             .forEach(
@@ -83,25 +86,25 @@
                 }
             );
 
-            
-            console.log("&lt;head&gt;'s &lt;script&gt; finished running at: " + formatDate(Date.now()));
+            // 4th (localhost); 4th (GitHub)
+            console.log("&lt;head&gt;'s second inline &lt;script&gt; finished running at: " + formatDate(Date.now()));
         </script>
 
         <title>Load test</title>
     </head>
 
-    <!-- 9th (localhost); 9th (GitHub) -->
+    <!--12th (localhost); 12th (GitHub) -->
     <body onload="reportCompletion('body.onload()', 'triggered', Date.now());">
         <ol id="theList" style="background-color: lightgray;">
         </ol>
-        <!-- 4th (localhost); 4th (GitHub) -->
+        <!-- 7th (localhost); 7th (GitHub) -->
         <img src="giga_cirno.png" width="200" height="300" onload="reportCompletion('&lt;img&gt;: Giga Cirno', 'loaded', Date.now());"/>
         <script type="text/javascript">
-            // 2nd (localhost); 2nd (GitHub)
+            // 5th (localhost); 5th (GitHub)
             reportCompletion('&lt;body&gt;\'s inline &lt;script&gt;', 'run', Date.now())
         </script>
         <script type="text/javascript">
-            // 3rd (localhost); 3rd (GitHub)
+            // 6th (localhost); 6th (GitHub)
             console.log("Running listing task now.");
             var theList = document.getElementById('theList');
             window.completions.forEach(function(completion){
