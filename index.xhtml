@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
     <head>
         <meta http-equiv="cache-control" content="no-cache" />
+        <!-- 1st (localhost); 1st (GitHub) -->
         <script type="text/javascript">
             window.completions = [];
 
@@ -26,6 +27,7 @@
                 bundleLoaded: false,
                 cssLoaded: false 
             };
+            reportCompletion('&lt;head&gt;\'s inline &lt;script&gt;', 'run', Date.now());
         </script>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" onload="reportCompletion('Static &lt;link&gt;: https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css', 'loaded', Date.now());" />
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" onload="reportCompletion('Static &lt;script&gt;: https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js', 'loaded', Date.now());" />
@@ -81,7 +83,7 @@
                 }
             );
 
-            // 1st (localhost); 1st (GitHub)
+            
             console.log("&lt;head&gt;'s &lt;script&gt; finished running at: " + formatDate(Date.now()));
         </script>
 
