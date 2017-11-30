@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
+    <head>
+        <meta http-equiv="cache-control" content="no-cache" />
+        <!--<link rel="stylesheet" type="text/css" href="linkTagCSS.css" />-->
+        <script type="text/javascript">
+            function formatDate(date){
+                var dateNowStrSliced = date.toString().slice(6);
+                return "..." + dateNowStrSliced[0] + "," + dateNowStrSliced.slice(1,4) + "," + dateNowStrSliced.slice(4,7) + " ms";
+            }
+
+            window.CACHE_BUST = "?v=" + Date.now();
+            // TODO: Do all this (ie. calling initApp()) only once body is ready. This currently may run before body.
+            window.semaphore = {
+                bundleLoaded: false,
+                cssLoaded: false 
+            };
+
+            [
+                "index.css",
+                "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            ]
+            .forEach(
+                function(sheetHref){
+                    var link = document.createElement('link');
+                    link.rel = "stylesheet";
+                    link.type = "text/css";
+                    link.href = sheetHref + window.CACHE_BUST; // cachebust.
+
+                    // 'load' event on &lt;link&gt; elements support: https://pie.gd/test/script-link-events/
+                    window.addEventListener(
+                        'load',
+                        function(){
+                            document.getElementsByTagName('head')[0].appendChild(link);
+                            console.log(sheetHref + " loaded at: " + formatDate(Date.now()));
+                        }
+                    );
+                }
+            );
+
+            [
+                "index.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"
+            ]
+            .forEach(
+                function(scriptSrc){
+                    var script = document.createElement('script');
+                    
+                    script.onload = function() {
+                        window.semaphore.bundleLoaded = true;
+                    };
+
+                    script.type = "text/javascript";
+                    script.src = scriptSrc + window.CACHE_BUST;
+
+                    window.addEventListener(
+                        'load',
+                        function(){
+                            document.getElementsByTagName('head')[0].appendChild(script);
+                            console.log(scriptSrc + " loaded at: " + formatDate(Date.now()));
+                        }
+                    );
+                }
+            );
+        </script>
+
+        <title>Load test</title>
+    </head>
+
+    <body onload="console.log('body.onload() triggered at: ' + formatDate(Date.now()));">
+        <img src="giga_cirno.png" onload="console.log('giga Cirno &lt;img&gt; triggered at: ' + formatDate(Date.now()));"/>
+        <script type="text/javascript">
+            console.log("body's inline &lt;script&gt; triggered at: " + formatDate(Date.now()));
+        </script>
+    </body>
+
+</html>
