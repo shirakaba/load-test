@@ -113,3 +113,5 @@ Here's what I want:
 * To call a function (eg. `initApp()`) from it at the earliest safe opportunity (`DOMContentLoaded`).
 
 When setting the `src` on a virtual `<script>` element, even if you do so within the `<head>`, its target `.js` file is not going to start its request until all static elements in the `<body>` (eg. `<img>`) have returned all their responses.
+
+The ideal solution is perhaps to put a static `<script>` element at the bottom of the `<body>`, pre-processed (with either PHP or a build script) with a new date param. Then, on the `DOMContentLoaded` event (or the `<script>`'s' `onload` event; will have to investigate, but I think it may fire at essentially the same moment in this particular setup), call the bundle's `initApp()` function.
