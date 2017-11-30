@@ -30,9 +30,9 @@
             };
 
             [
-                // 5th (localhost)
+                // 5th (localhost); 5th (GitHub)
                 "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
-                // 6th (localhost)
+                // 6th (localhost); 6th (GitHub)
                 "index.css"
             ]
             .forEach(
@@ -54,9 +54,9 @@
             );
 
             [
-                // 7th (localhost)
+                // 7th (localhost); 7th (GitHub)
                 "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js",
-                // 8th (localhost)
+                // 8th (localhost); 8th (GitHub)
                 "index.js"
             ]
             .forEach(
@@ -80,25 +80,25 @@
                 }
             );
 
-            // 1st (localhost)
+            // 1st (localhost); 1st (GitHub)
             console.log("&lt;head&gt;'s &lt;script&gt; finished running at: " + formatDate(Date.now()));
         </script>
 
         <title>Load test</title>
     </head>
 
-    <!-- 9th (localhost) -->
+    <!-- 9th (localhost); 9th (GitHub) -->
     <body onload="reportCompletion('body.onload()', 'triggered', Date.now());">
         <ol id="theList" style="background-color: lightgray;">
         </ol>
-        <!-- 4th (localhost) -->
+        <!-- 4th (localhost); 4th (GitHub) -->
         <img src="giga_cirno.png" width="200" height="300" onload="reportCompletion('&lt;img&gt;: Giga Cirno', 'loaded', Date.now());"/>
         <script type="text/javascript">
-            // 2nd (localhost)
+            // 2nd (localhost); 2nd (GitHub)
             reportCompletion('&lt;body&gt;\'s inline &lt;script&gt;', 'run', Date.now())
         </script>
         <script type="text/javascript">
-            // 3rd (localhost)
+            // 3rd (localhost); 3rd (GitHub)
             console.log("Running listing task now.");
             var theList = document.getElementById('theList');
             window.completions.forEach(function(completion){
